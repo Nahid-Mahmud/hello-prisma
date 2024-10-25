@@ -20,7 +20,16 @@ const createUserIntoDB = async (payload: User) => {
 };
 
 const getAllUsers = async () => {
-  const users = await prisma.user.findMany();
+  const users = await prisma.user.findMany({
+    include: {
+      post: {
+        select: {
+          title: true,
+          content: true,
+        },
+      },
+    },
+  });
   return users;
 };
 
